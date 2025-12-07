@@ -9,11 +9,18 @@
 
 void update()
 {
-    // TODO
+    if (IsKeyPressed(KEY_ENTER)) {
+        game_state = in_game_state;
+    }
 
     if (IsKeyPressed(KEY_ESCAPE)) {
-        game_state = paused_state;
+        if (game_state == paused_state) {
+            game_state = in_game_state;
+        } else if (game_state == in_game_state) {
+            game_state = paused_state;
+        }
     }
+
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
         move_paddle(-paddle_speed);
     }
@@ -32,12 +39,20 @@ void update()
 
 void draw()
 {
-    // TODO
-
-    draw_level();
-    draw_paddle();
-    draw_ball();
-    draw_ui();
+    switch (game_state) {
+    case menu_state:
+        draw_menu();
+        break;
+    case in_game_state:
+        draw_level();
+        draw_paddle();
+        draw_ball();
+        draw_ui();
+        break;
+    case paused_state:
+        draw_menu();
+        break;
+    }
 }
 
 int main()
