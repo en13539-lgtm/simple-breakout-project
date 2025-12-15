@@ -9,31 +9,51 @@
 
 void update()
 {
-    if (IsKeyPressed(KEY_ENTER)) {
-        game_state = in_game_state;
-    }
-
-    if (IsKeyPressed(KEY_ESCAPE)) {
-        if (game_state == paused_state) {
+    switch (game_state) {
+    case menu_state:
+        if (IsKeyPressed(KEY_ENTER)) {
+            load_level();
             game_state = in_game_state;
-        } else if (game_state == in_game_state) {
-            game_state = paused_state;
         }
-    }
+        break;
 
-    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
-        move_paddle(-paddle_speed);
-    }
-    if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-        move_paddle(paddle_speed);
-    }
-    move_ball();
-    if (!is_ball_inside_level()) {
-        load_level();
-        PlaySound(lose_sound);
-    } else if (current_level_blocks == 0) {
-        load_level(1);
-        PlaySound(win_sound);
+    case in_game_state:
+        if (IsKeyPressed(KEY_ESCAPE)) {
+            game_state = paused_state;
+            break;
+        }
+
+        if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
+            move_paddle(-paddle_speed);
+        }
+        if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+            move_paddle(paddle_speed);
+        }
+
+        move_ball();
+
+        if (!is_ball_inside_level()) {
+            load_level();
+            PlaySound(lose_sound);
+        } else if (current_level_blocks == 0) {
+            load_level(1);
+            PlaySound(win_sound);
+            game_state = victory_state;
+        }
+        break;
+
+    case paused_state:
+        if (IsKeyPressed(KEY_ESCAPE)) {
+            game_state = in_game_state;
+        }
+        break;
+
+    case victory_state:
+        if (IsKeyPressed(KEY_ENTER)) {
+            load_level();
+            game_state = in_game_state;
+        }
+        break;
     }
 }
 
@@ -50,7 +70,15 @@ void draw()
         draw_ui();
         break;
     case paused_state:
-        draw_menu();
+        draw_level();
+        draw_paddle();
+        draw_ball();
+        draw_ui();
+        draw_pause_menu();
+        break;
+
+    case victory_state:
+        draw_victory_menu();
         break;
     }
 }
