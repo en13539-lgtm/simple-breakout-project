@@ -20,7 +20,8 @@ enum game_state {
     menu_state,
     in_game_state,
     paused_state,
-    victory_state
+    victory_state,
+    game_over_state
 };
 
 inline char level_1_data[] = {
@@ -72,4 +73,7 @@ inline game_state game_state = menu_state;
 
 inline int dollars = 0;
 constexpr int dollars_per_coin = 10;
+
+inline int lives = 3;
+constexpr int max_lives = 3;
 #endif // GAME_H
