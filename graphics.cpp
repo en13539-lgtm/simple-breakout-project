@@ -128,6 +128,16 @@ void draw_menu()
 
 void draw_ui()
 {
+    const Text dollars_counter = {
+        "$" + std::to_string(dollars),
+        { 0.10f, 0.0375f },
+        48.0f,
+        GOLD,
+        4.0f,
+        &menu_font
+    };
+    draw_text(dollars_counter);
+
     const Text level_counter = {
         "LEVEL " + std::to_string(current_level_index + 1) + " OUT OF " + std::to_string(level_count),
         { 0.5f, 0.0375f },
@@ -166,6 +176,12 @@ void draw_level()
             case BLOCKS:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
+            case COIN: {
+                const Vector2 center = { texture_x_pos + cell_size * 0.5f, texture_y_pos + cell_size * 0.5f };
+                DrawCircleV(center, cell_size * 0.30f, GOLD);
+                DrawCircleV({ center.x - cell_size * 0.08f, center.y - cell_size * 0.08f }, cell_size * 0.08f, { 255, 255, 255, 140 });
+                break;
+            }
             default:;
             }
         }

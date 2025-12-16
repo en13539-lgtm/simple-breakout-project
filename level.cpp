@@ -11,6 +11,10 @@ char* current_level_data;
 
 void load_level(const int offset)
 {
+    if (offset == 0) {
+        dollars = 0;
+    }
+
     current_level_index += offset;
 
     if (current_level_index >= level_count) {

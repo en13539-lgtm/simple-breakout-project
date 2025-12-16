@@ -32,6 +32,14 @@ void move_ball()
         ball_pos.y + ball_vel.y
     };
 
+    if (is_colliding_with_level_cell(next_ball_pos, ball_size, COIN)) {
+        char& coin_cell = get_colliding_level_cell(next_ball_pos, ball_size, COIN);
+        coin_cell = VOID;
+
+        dollars += dollars_per_coin;
+        PlaySound(cache_sound);
+    }
+
     if (is_colliding_with_level_cell(next_ball_pos, ball_size, WALL)) {
         if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, WALL)) {
             ball_vel.x = -ball_vel.x;

@@ -35,11 +35,13 @@ void load_sounds()
     InitAudioDevice();
     win_sound = LoadSound("data/sounds/win.wav");
     lose_sound = LoadSound("data/sounds/lose.wav");
+    cache_sound = LoadSound("data/sounds/cache.mp3");
 }
 
 void unload_sounds()
 {
     UnloadSound(win_sound);
     UnloadSound(lose_sound);
+    UnloadSound(cache_sound);
     CloseAudioDevice();
 }
