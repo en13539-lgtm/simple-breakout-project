@@ -101,6 +101,32 @@ void derive_graphics_metrics()
     };
 }
 
+void draw_heart(Vector2 center, float scale, Color color, float thickness = 2.5f)
+{
+    const int POINTS = 200;
+    Vector2 prev{};
+
+    for (int i = 0; i <= POINTS; i++)
+    {
+        float t = (float)i / (float)POINTS * 2.0f * PI;
+
+        float x = 16.0f * powf(sinf(t), 3.0f);
+        float y = -(13.0f * cosf(t)
+            - 5.0f * cosf(2.0f * t)
+            - 2.0f * cosf(3.0f * t)
+            - 1.0f * cosf(4.0f * t));
+
+        Vector2 p = {
+            center.x + x * scale,
+            center.y + y * scale
+        };
+
+        if (i > 0) DrawLineEx(prev, p, thickness, color);
+        prev = p;
+    }
+}
+
+
 void draw_menu()
 {
     ClearBackground(BLACK);
@@ -147,6 +173,19 @@ void draw_ui()
         &menu_font
     };
     draw_text(level_counter);
+
+    const float baseX = screen_size.x * 0.08f;
+    const float baseY = screen_size.y * 0.93f;
+    const float spacing = 48.0f;
+    const float scale = 1.6f;
+    const float thickness = 5.5f;
+
+    for (int i = 0; i < max_lives; ++i) {
+        Color c = (i < lives) ? RED : DARKGRAY;
+        Vector2 center = { baseX + i * spacing, baseY };
+        draw_heart(center, scale, c, thickness);
+    }
+
 
     const Text boxes_remaining = {
         "BLOCKS " + std::to_string(current_level_blocks),
@@ -273,4 +312,40 @@ void draw_victory_menu()
         &menu_font
     };
     draw_text(victory_subtitle);
+}
+
+
+void init_game_over_menu()
+{
+    init_victory_menu();
+}
+
+void draw_game_over_menu()
+{
+    animate_victory_menu();
+    DrawRectangleV({ 0.0f, 0.0f }, { screen_size.x, screen_size.y }, { 0, 0, 0, 50 });
+
+    for (const auto& [x, y] : victory_balls_pos) {
+        DrawCircleV({ x, y }, victory_balls_size, WHITE);
+    }
+
+    const Text title = {
+        "Game Over",
+        { 0.50f, 0.50f },
+        100.0f,
+        RED,
+        4.0f,
+        &menu_font
+    };
+    draw_text(title);
+
+    const Text subtitle = {
+        "Press Enter to Start New Game",
+        { 0.50f, 0.65f },
+        32.0f,
+        WHITE,
+        4.0f,
+        &menu_font
+    };
+    draw_text(subtitle);
 }

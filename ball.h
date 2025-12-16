@@ -14,4 +14,9 @@ void spawn_ball();
 void move_ball();
 bool is_ball_inside_level();
 
+inline Vector2 ball_spawn_pos;
+
+void reset_ball();
+bool is_ball_touching_bottom();
+
 #endif // BALL_H

@@ -11,7 +11,8 @@ void spawn_paddle()
         for (int row = 0; row < current_level.rows; row++) {
             if (get_level_cell(row, column) == PADDLE) {
                 set_level_cell(row, column, VOID);
-                paddle_pos = { static_cast<float>(column), static_cast<float>(row) };
+                paddle_spawn_pos = { static_cast<float>(column), static_cast<float>(row) };
+                reset_paddle();
                 goto outer_loop_end;
             }
         }
@@ -33,4 +34,9 @@ bool is_colliding_with_paddle(const Vector2 pos, const Vector2 size)
     const Rectangle paddle_hitbox = { paddle_pos.x, paddle_pos.y, paddle_size.x, paddle_size.y };
     const Rectangle hitbox = { pos.x, pos.y, size.x, size.y };
     return CheckCollisionRecs(paddle_hitbox, hitbox);
+}
+
+void reset_paddle()
+{
+    paddle_pos = paddle_spawn_pos;
 }

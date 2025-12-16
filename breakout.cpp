@@ -12,6 +12,7 @@ void update()
     switch (game_state) {
     case menu_state:
         if (IsKeyPressed(KEY_ENTER)) {
+            lives = max_lives;
             load_level();
             game_state = in_game_state;
         }
@@ -29,13 +30,30 @@ void update()
         if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
             move_paddle(paddle_speed);
         }
+        // For Debugging
+//        if (IsKeyPressed(KEY_N))
+//        {
+//            load_level(1);
+//        }
 
         move_ball();
-
-        if (!is_ball_inside_level()) {
-            load_level();
+        if (is_ball_touching_bottom()) {
+            lives--;
             PlaySound(lose_sound);
-        } else if (current_level_blocks == 0) {
+
+            if (lives <= 0) {
+                game_state = game_over_state;
+                ClearBackground(BLACK);
+                init_game_over_menu();
+                break;
+            }
+
+            reset_ball();
+            reset_paddle();
+            break;
+        }
+
+        if (current_level_blocks == 0) {
             load_level(1);
             PlaySound(win_sound);
             game_state = victory_state;
@@ -54,6 +72,14 @@ void update()
             game_state = in_game_state;
         }
         break;
+    case game_over_state:
+        if (IsKeyPressed(KEY_ENTER)) {
+            lives = max_lives;
+            load_level();
+            game_state = in_game_state;
+        }
+        break;
+
     }
 }
 
@@ -79,6 +105,9 @@ void draw()
 
     case victory_state:
         draw_victory_menu();
+        break;
+    case game_over_state:
+        draw_game_over_menu();
         break;
     }
 }

@@ -14,10 +14,8 @@ void spawn_ball()
         for (int row = 0; row < current_level.rows; row++) {
             if (get_level_cell(row, column) == BALL) {
                 set_level_cell(row, column, VOID);
-                ball_pos = { static_cast<float>(column), static_cast<float>(row) };
-                constexpr float ball_launch_angle_radians = ball_launch_angle_degrees * (std::numbers::pi_v<float> / 180.0f);
-                ball_vel.y = -ball_launch_vel_mag * std::sin(ball_launch_angle_radians);
-                ball_vel.x = (rand() % 2 == 0) ? ball_launch_vel_mag * std::cos(ball_launch_angle_radians) : -ball_launch_vel_mag * std::cos(ball_launch_angle_radians);
+                ball_spawn_pos = { static_cast<float>(column), static_cast<float>(row) };
+                reset_ball();
                 goto outer_loop_end;
             }
         }
@@ -68,6 +66,23 @@ void move_ball()
     }
 
     ball_pos = next_ball_pos;
+}
+
+void reset_ball()
+{
+    ball_pos = ball_spawn_pos;
+    constexpr float ball_launch_angle_radians =
+        ball_launch_angle_degrees * (std::numbers::pi_v<float> / 180.0f);
+
+    ball_vel.y = -ball_launch_vel_mag * std::sin(ball_launch_angle_radians);
+    ball_vel.x = (rand() % 2 == 0)
+        ?  ball_launch_vel_mag * std::cos(ball_launch_angle_radians)
+        : -ball_launch_vel_mag * std::cos(ball_launch_angle_radians);
+}
+
+bool is_ball_touching_bottom()
+{
+    return (ball_pos.y + ball_size.y) >= (static_cast<float>(current_level.rows) - 1.0f);
 }
 
 bool is_ball_inside_level()
