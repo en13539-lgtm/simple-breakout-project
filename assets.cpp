@@ -36,6 +36,7 @@ void load_sounds()
     win_sound = LoadSound("data/sounds/win.wav");
     lose_sound = LoadSound("data/sounds/lose.wav");
     cache_sound = LoadSound("data/sounds/cache.mp3");
+    bonus_sound = LoadSound("data/sounds/bonus.mp3");
 }
 
 void unload_sounds()
@@ -43,5 +44,6 @@ void unload_sounds()
     UnloadSound(win_sound);
     UnloadSound(lose_sound);
     UnloadSound(cache_sound);
+    UnloadSound(bonus_sound);
     CloseAudioDevice();
 }
