@@ -21,7 +21,8 @@ enum game_state {
     in_game_state,
     paused_state,
     victory_state,
-    game_over_state
+    game_over_state,
+    shop_state
 };
 
 inline char level_1_data[] = {
@@ -73,6 +74,14 @@ inline game_state game_state = menu_state;
 
 inline int dollars = 0;
 constexpr int dollars_per_coin = 10;
+
+constexpr int price_extra_life   = 50;
+constexpr int price_wide_paddle  = 30;
+constexpr int price_slow_ball    = 40;
+
+inline bool upgrade_wide_paddle = false;
+inline bool upgrade_slow_ball   = false;
+
 
 inline int lives = 3;
 constexpr int max_lives = 3;

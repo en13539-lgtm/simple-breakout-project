@@ -23,10 +23,14 @@ outer_loop_end:;
 void move_paddle(const float x_offset)
 {
     float next_paddle_pos_x = paddle_pos.x + x_offset;
-    if (is_colliding_with_level_cell({ next_paddle_pos_x, paddle_pos.y }, paddle_size, WALL)) {
-        next_paddle_pos_x = std::round(next_paddle_pos_x);
+    if (!is_colliding_with_level_cell({ next_paddle_pos_x, paddle_pos.y }, paddle_size, WALL)) {
+        paddle_pos.x = next_paddle_pos_x;
     }
-    paddle_pos.x = next_paddle_pos_x;
+
+    const float min_x = 1.0f;
+    const float max_x = static_cast<float>(current_level.columns - 1) - paddle_size.x;
+    if (paddle_pos.x < min_x) paddle_pos.x = min_x;
+    if (paddle_pos.x > max_x) paddle_pos.x = max_x;
 }
 
 bool is_colliding_with_paddle(const Vector2 pos, const Vector2 size)
@@ -39,4 +43,18 @@ bool is_colliding_with_paddle(const Vector2 pos, const Vector2 size)
 void reset_paddle()
 {
     paddle_pos = paddle_spawn_pos;
+    apply_paddle_upgrades();
+}
+
+void apply_paddle_upgrades()
+{
+    paddle_size = paddle_base_size;
+    if (upgrade_wide_paddle) {
+        paddle_size.x *= 1.45f;
+    }
+    const float min_x = 1.0f;
+    const float max_x = static_cast<float>(current_level.columns - 1) - paddle_size.x;
+
+    if (paddle_pos.x < min_x) paddle_pos.x = min_x;
+    if (paddle_pos.x > max_x) paddle_pos.x = max_x;
 }

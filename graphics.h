@@ -13,6 +13,8 @@ void init_victory_menu();
 void draw_victory_menu();
 void init_game_over_menu();
 void draw_game_over_menu();
+void init_shop_menu();
+void draw_shop_menu();
 
 
 #endif // GRAPHICS_H

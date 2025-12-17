@@ -2,6 +2,7 @@
 #include "assets.h"
 #include "level.h"
 #include "paddle.h"
+#include "game.h"
 
 #include "raylib.h"
 
@@ -74,11 +75,12 @@ void reset_ball()
     ball_pos = ball_spawn_pos;
     constexpr float ball_launch_angle_radians =
         ball_launch_angle_degrees * (std::numbers::pi_v<float> / 180.0f);
-
-    ball_vel.y = -ball_launch_vel_mag * std::sin(ball_launch_angle_radians);
+    float speed = ball_launch_vel_mag;
+    if (upgrade_slow_ball) speed *= 0.75f;
+    ball_vel.y = -speed * std::sin(ball_launch_angle_radians);
     ball_vel.x = (rand() % 2 == 0)
-        ?  ball_launch_vel_mag * std::cos(ball_launch_angle_radians)
-        : -ball_launch_vel_mag * std::cos(ball_launch_angle_radians);
+        ?  speed * std::cos(ball_launch_angle_radians)
+        : -speed * std::cos(ball_launch_angle_radians);
 }
 
 bool is_ball_touching_bottom()

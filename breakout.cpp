@@ -12,7 +12,11 @@ void update()
     switch (game_state) {
     case menu_state:
         if (IsKeyPressed(KEY_ENTER)) {
+            dollars = 0;
             lives = max_lives;
+            upgrade_wide_paddle = false;
+            upgrade_slow_ball = false;
+
             load_level();
             game_state = in_game_state;
         }
@@ -54,9 +58,9 @@ void update()
         }
 
         if (current_level_blocks == 0) {
-            load_level(1);
             PlaySound(win_sound);
-            game_state = victory_state;
+            init_shop_menu();
+            game_state = shop_state;
         }
         break;
 
@@ -79,7 +83,35 @@ void update()
             game_state = in_game_state;
         }
         break;
+    case shop_state:
+    {
+        if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1)) {
+            if (dollars >= price_extra_life && lives < max_lives) {
+                dollars -= price_extra_life;
+                lives += 1;
+            }
+        }
 
+        if (IsKeyPressed(KEY_TWO) || IsKeyPressed(KEY_KP_2)) {
+            if (!upgrade_wide_paddle && dollars >= price_wide_paddle) {
+                dollars -= price_wide_paddle;
+                upgrade_wide_paddle = true;
+            }
+        }
+
+        if (IsKeyPressed(KEY_THREE) || IsKeyPressed(KEY_KP_3)) {
+            if (!upgrade_slow_ball && dollars >= price_slow_ball) {
+                dollars -= price_slow_ball;
+                upgrade_slow_ball = true;
+            }
+        }
+
+        if (IsKeyPressed(KEY_ENTER)) {
+            load_level(1);
+            game_state = in_game_state;
+        }
+        break;
+    }
     }
 }
 
@@ -108,6 +140,9 @@ void draw()
         break;
     case game_over_state:
         draw_game_over_menu();
+        break;
+    case shop_state:
+        draw_shop_menu();
         break;
     }
 }
