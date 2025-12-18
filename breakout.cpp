@@ -65,6 +65,7 @@ void update()
             PlaySound(win_sound);
             init_shop_menu();
             game_state = shop_state;
+            is_live_added = false;
         }
         break;
 
@@ -102,6 +103,8 @@ void update()
             if (dollars >= price_extra_life && lives < max_lives) {
                 dollars -= price_extra_life;
                 lives += 1;
+                is_live_added = true;
+                PlaySound(choice_sound);
             }
         }
 
@@ -109,6 +112,7 @@ void update()
             if (!upgrade_wide_paddle && dollars >= price_wide_paddle) {
                 dollars -= price_wide_paddle;
                 upgrade_wide_paddle = true;
+                PlaySound(choice_sound);
             }
         }
 
@@ -116,6 +120,7 @@ void update()
             if (!upgrade_slow_ball && dollars >= price_slow_ball) {
                 dollars -= price_slow_ball;
                 upgrade_slow_ball = true;
+                PlaySound(choice_sound);
             }
         }
 

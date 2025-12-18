@@ -211,15 +211,15 @@ void draw_shop_menu()
     const Text money = { "MONEY: $" + std::to_string(dollars), {0.5f, 0.30f}, 42.0f, GREEN, 4.0f, &menu_font };
     draw_text(money);
     const Text i1 = { "[1] +1 LIFE   - $" + std::to_string(price_extra_life),
-        {0.5f, 0.42f}, 36.0f, WHITE, 4.0f, &menu_font };
+        {0.5f, 0.42f}, 36.0f, is_live_added ? ORANGE : WHITE, 4.0f, &menu_font };
     draw_text(i1);
     const Text i2 = { std::string("[2] WIDE PADDLE - $") + std::to_string(price_wide_paddle)
             + (upgrade_wide_paddle ? " (OWNED)" : ""),
-        {0.5f, 0.50f}, 36.0f, WHITE, 4.0f, &menu_font };
+        {0.5f, 0.50f}, 36.0f, upgrade_wide_paddle ? ORANGE : WHITE, 4.0f, &menu_font };
     draw_text(i2);
     const Text i3 = { std::string("[3] SLOW BALL - $") + std::to_string(price_slow_ball)
             + (upgrade_slow_ball ? " (OWNED)" : ""),
-        {0.5f, 0.58f}, 36.0f, WHITE, 4.0f, &menu_font };
+        {0.5f, 0.58f}, 36.0f, upgrade_slow_ball ? ORANGE : WHITE, 4.0f, &menu_font };
     draw_text(i3);
     const Text hint = { "Press ENTER to continue", {0.5f, 0.75f}, 32.0f, GRAY, 4.0f, &menu_font };
     draw_text(hint);

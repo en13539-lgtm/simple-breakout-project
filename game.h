@@ -131,6 +131,7 @@ constexpr int price_slow_ball    = 40;
 
 inline bool upgrade_wide_paddle = false;
 inline bool upgrade_slow_ball   = false;
+inline bool is_live_added       = false;
 
 
 inline int lives = 3;
