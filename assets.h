@@ -18,6 +18,9 @@ inline Sound win_sound;
 inline Sound lose_sound;
 inline Sound cache_sound;
 inline Sound bonus_sound;
+inline Music shopping_music;
+inline bool shop_music_loaded = false;
+inline bool shopping_music_playing = false;
 
 void load_fonts();
 void unload_fonts();

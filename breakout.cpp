@@ -9,6 +9,9 @@
 
 void update()
 {
+    if (shop_music_loaded) {
+        UpdateMusicStream(shopping_music);
+    }
     switch (game_state) {
     case menu_state:
         if (IsKeyPressed(KEY_ENTER)) {
@@ -85,6 +88,10 @@ void update()
         break;
     case shop_state:
     {
+        if (shop_music_loaded && !shopping_music_playing) {
+            PlayMusicStream(shopping_music);
+            shopping_music_playing = true;
+        }
         if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1)) {
             if (dollars >= price_extra_life && lives < max_lives) {
                 dollars -= price_extra_life;
@@ -107,6 +114,10 @@ void update()
         }
 
         if (IsKeyPressed(KEY_ENTER)) {
+            if (shop_music_loaded && shopping_music_playing) {
+                StopMusicStream(shopping_music);
+                shopping_music_playing = false;
+            }
             load_level(1);
             game_state = in_game_state;
         }

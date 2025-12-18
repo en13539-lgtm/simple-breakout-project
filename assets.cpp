@@ -37,6 +37,9 @@ void load_sounds()
     lose_sound = LoadSound("data/sounds/lose.wav");
     cache_sound = LoadSound("data/sounds/cache.mp3");
     bonus_sound = LoadSound("data/sounds/bonus.mp3");
+    shopping_music = LoadMusicStream("data/musics/shopping.mp3");
+    SetMusicVolume(shopping_music, 0.45f);
+    shop_music_loaded = true;
 }
 
 void unload_sounds()
@@ -45,5 +48,9 @@ void unload_sounds()
     UnloadSound(lose_sound);
     UnloadSound(cache_sound);
     UnloadSound(bonus_sound);
+    if (shop_music_loaded) {
+        UnloadMusicStream(shopping_music);
+        shop_music_loaded = false;
+    }
     CloseAudioDevice();
 }
