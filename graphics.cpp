@@ -340,39 +340,36 @@ void draw_victory_menu()
     };
     draw_text(victory_subtitle);
 }
-
+static float blinks = 0.0f;
 
 void init_game_over_menu()
 {
-    init_victory_menu();
+    blinks = 0.0f;
 }
 
 void draw_game_over_menu()
 {
-    animate_victory_menu();
-    DrawRectangleV({ 0.0f, 0.0f }, { screen_size.x, screen_size.y }, { 0, 0, 0, 50 });
-
-    for (const auto& [x, y] : victory_balls_pos) {
-        DrawCircleV({ x, y }, victory_balls_size, WHITE);
-    }
-
+    ClearBackground(BLACK);
+    blinks += GetFrameTime();
+    const bool show_hint = fmodf(blinks, 1.0f) < 0.6f;
     const Text title = {
-        "Game Over",
-        { 0.50f, 0.50f },
-        100.0f,
+        "GAME OVER",
+        { 0.50f, 0.42f },
+        120.0f,
         RED,
         4.0f,
         &menu_font
     };
     draw_text(title);
-
-    const Text subtitle = {
-        "Press Enter to Start New Game",
-        { 0.50f, 0.65f },
-        32.0f,
-        WHITE,
-        4.0f,
-        &menu_font
-    };
-    draw_text(subtitle);
+    if (show_hint) {
+        const Text hint = {
+            "Press ENTER to Start New Game",
+            { 0.50f, 0.58f },
+            32.0f,
+            WHITE,
+            4.0f,
+            &menu_font
+        };
+        draw_text(hint);
+    }
 }

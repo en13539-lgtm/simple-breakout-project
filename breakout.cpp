@@ -80,6 +80,7 @@ void update()
         }
         break;
     case game_over_state:
+        draw_game_over_menu();
         if (IsKeyPressed(KEY_ENTER)) {
             lives = max_lives;
             load_level();
