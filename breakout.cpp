@@ -12,6 +12,10 @@ void update()
     if (shop_music_loaded) {
         UpdateMusicStream(shopping_music);
     }
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        if (game_state == in_game_state) game_state = paused_state;
+        else if (game_state == paused_state) game_state = in_game_state;
+    }
     switch (game_state) {
     case menu_state:
         if (IsKeyPressed(KEY_ENTER)) {
@@ -68,13 +72,6 @@ void update()
             is_live_added = false;
         }
         break;
-
-    case paused_state:
-        if (IsKeyPressed(KEY_ESCAPE)) {
-            game_state = in_game_state;
-        }
-        break;
-
     case victory_state:
         if (IsKeyPressed(KEY_ENTER)) {
             load_level();
@@ -173,6 +170,7 @@ int main()
 {
     SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(1280, 720, "Breakout");
+    SetExitKey(0);
     SetTargetFPS(60);
 
     load_fonts();
