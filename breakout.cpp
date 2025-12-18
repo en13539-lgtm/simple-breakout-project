@@ -15,6 +15,7 @@ void update()
     switch (game_state) {
     case menu_state:
         if (IsKeyPressed(KEY_ENTER)) {
+            current_level_index = 0;
             dollars = 0;
             lives = max_lives;
             upgrade_wide_paddle = false;
@@ -81,6 +82,9 @@ void update()
         break;
     case game_over_state:
         current_level_index = 0;
+        dollars = 0;
+        upgrade_wide_paddle = false;
+        upgrade_slow_ball = false;
         draw_game_over_menu();
         if (IsKeyPressed(KEY_ENTER)) {
             lives = max_lives;
