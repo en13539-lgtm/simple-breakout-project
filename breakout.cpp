@@ -31,11 +31,6 @@ void update()
         break;
 
     case in_game_state:
-        if (IsKeyPressed(KEY_ESCAPE)) {
-            game_state = paused_state;
-            break;
-        }
-
         if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
             move_paddle(-paddle_speed);
         }
