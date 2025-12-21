@@ -134,3 +134,55 @@ Refer to the specific course or assignment page on Moodle for detailed informati
 ## Credits
 
 * [Luna Maltseva](https://github.com/lunamaltseva)
+
+## About the Project
+
+### Game Description
+
+* This is a game where you need to hit the ball and destroy all the blocks on the level.
+* Controls: </> movement, ESC - pause/unpause, ENTER - confirmation (menu/shop/new game).
+
+### Game Screens
+
+* Menu screen: Press ENTER to start the game.
+* Game screen: Main gameplay.
+* Pause screen: ESC pauses the game, ESC resumes.
+* Shop screen: Appears after each level pass.
+* Game Over screen: Displayed when you lose all your lives; ENTER restarts the game from the first level.
+* Victory screen: Displayed after completing the final level.
+
+### Lives
+At the beginning of the game, the player is given three lives. Each time they fail to intercept 
+the ball with the board and it touches the floor, they lose a life. 
+After losing all lives, the game state transitions to game_over state.
+The player can see how many lives(hearts) he has left in the lower left part of the screen.
+
+### Coins or Dollars
+By completing levels, the player can earn coins ($). The collected coins are added up and displayed in the upper left corner.
+Each coin is 10 Dollars in a local valute.
+
+### Shop
+The shop appears between levels after the current level is won.
+The store offers three items for purchase:
+1) Add one life (50 coins) if the player loses any during the game
+2) Expand the board to help with progression (30)
+3) Slow down the ball (40 dollars)
+
+### Levels
+There are 5 levels with different difficulty.
+Win a level > Shop > Next level
+After the last level > Victory
+
+### Sounds
+There are five sounds
+1. bonus.mp3 - when a ball breaks blocks
+2. cache.mp3 - coin collection
+3. choice.mp3 - when an item from shop was purchased
+4. lose.wav - when a ball hits a bottom of the screen
+5. win.wav - when all the blocks for the current level were destroyed.
+
+### Background music
+1. shopping.mp3 - plays when game_state is in shop_state
+
+
+
